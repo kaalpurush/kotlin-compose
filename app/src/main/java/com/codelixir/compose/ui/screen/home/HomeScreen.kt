@@ -1,4 +1,4 @@
-package com.codelixir.compose
+package com.codelixir.compose.ui.screen.home
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -18,10 +18,14 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlin.random.Random
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+    viewModel.getAllPopularMovies()
+    val allMovies by viewModel.popularMovies.collectAsState()
     Box(
         modifier = Modifier
             .background(Color.White)
@@ -29,13 +33,16 @@ fun HomeScreen() {
     ) {
         Column {
             GreetingSection("Kaal")
-            ChipSection(chips = listOf("Hamb", "Lamb", "Mamb", "Tamb", "Lamb", "Damb", "Kamb"))
-            CurMed()
-            var text by remember { mutableStateOf("") }
-            TextField(value = text, onValueChange = { text = it })
-            Text(text = text)
-            CustomShapeView(color = Color.Red)
-            CustomShapeView(color = Color.Blue)
+            allMovies?.let {
+                MovieListContent(it.movies)
+            }
+//            ChipSection(chips = listOf("Hamb", "Lamb", "Mamb", "Tamb", "Lamb", "Damb", "Kamb"))
+//            CurMed()
+//            var text by remember { mutableStateOf("") }
+//            TextField(value = text, onValueChange = { text = it })
+//            Text(text = text)
+//            CustomShapeView(color = Color.Red)
+//            CustomShapeView(color = Color.Blue)
         }
     }
 }
