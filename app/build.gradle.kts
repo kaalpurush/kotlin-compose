@@ -8,19 +8,19 @@ plugins {
     //id("com.google.devtools.ksp")
 }
 
-val composeVersion by extra { "1.1.1" }
+val composeVersion by extra { "1.1.1" } //1.2 error for kotlin 1.6.10
 val hiltVersion by extra { "2.41" }
 val coroutineVersion by extra { "1.6.4" }
-val roomVersion by extra { "2.4.3" }
+val roomVersion by extra { "2.5.2" }
 
 android {
     namespace = "com.codelixir.compose"
-    compileSdk = 31
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.codelixir.compose"
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -79,14 +79,15 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation("androidx.core:core-ktx:1.8.0") //1.9 error
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1") //2.6 error
 
-    implementation("androidx.activity:activity-compose:1.5.1")
-    //implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-    implementation("androidx.compose.material:material:$composeVersion")
+    //implementation("androidx.activity:activity-compose:1.6.1") //1.7 error
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    //implementation("androidx.compose.runtime:runtime")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material:material")
 
     //hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
@@ -115,8 +116,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    //androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
-    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
+
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
